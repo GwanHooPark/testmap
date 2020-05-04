@@ -22,7 +22,7 @@
                 kakao.maps.load(function() {
                     var container = document.getElementById('map');
                     container.style.width = "100%";
-                    container.style.height = window.screen.height + "px";
+                    container.style.height = window.screen.height - 100 + "px";
                     var options = {
                         center: new kakao.maps.LatLng(33.450701, 126.570667),
                         level: 3
