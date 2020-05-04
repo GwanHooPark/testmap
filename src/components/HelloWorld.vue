@@ -37,7 +37,7 @@ export default {
       this.showInstallPromotion();
     });
   },
-  methods : {
+  methods: {
     showInstallPromotion: function(){
       let addBtn = document.querySelector(".add-button");
       addBtn.style.display = 'block';
