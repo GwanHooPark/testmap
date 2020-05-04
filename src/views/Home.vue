@@ -1,18 +1,62 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <Map/>
+    <button class="add-button" style="display:none" v-on:click="clickInstallBtn">Add to home screen</button>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import Map from "@/components/Map.vue";
 
 export default {
   name: "Home",
   components: {
-    HelloWorld
+    Map
+  },
+  data: function() {
+    return {
+      deferredPrompt: null
+    };
+  },
+  mounted: function() {
+    console.log('hello world mounted');
+    window.addEventListener('appinstalled', () => {
+      console.log("app installed");
+    });
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      this.deferredPrompt = e;
+      this.showInstallPromotion();
+    });
+  },
+  methods: {
+    showInstallPromotion: function(){
+      let addBtn = document.querySelector(".add-button");
+      addBtn.style.display = 'block';
+    },
+    hideMyInstallPromotion: function(){
+      let addBtn = document.querySelector(".add-button");
+      addBtn.style.display = 'none';
+    },
+    clickInstallBtn: function(){
+      this.hideMyInstallPromotion();
+      this.deferredPrompt.prompt();
+      this.deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted the install prompt');
+        } else {
+          console.log('User dismissed the install prompt');
+        }
+      });
+    }
   }
 };
 </script>
+<style>
+  .add-button {
+    position : absolute;
+    top: 0;
+    left: 0;
+  }
+</style>
