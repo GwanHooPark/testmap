@@ -30,7 +30,7 @@ export default {
 
       let deferredPrompt = e;
       // Update UI to notify the user they can add to home screen
-      let addBtn = document.querySelector(".btnAdd");
+      let addBtn = document.querySelector(".add-button");
       addBtn.style.display = 'block';
 
       addBtn.addEventListener('click', (e) => {
