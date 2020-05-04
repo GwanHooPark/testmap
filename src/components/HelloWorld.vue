@@ -9,7 +9,7 @@
       >.
     </p>
     <h3>Installed CLI Plugins</h3>
-    <button class="add-button">Add to home screen</button>
+    <button class="add-button" style="display:none" v-on:click="clickInstallBtn">Add to home screen</button>
   </div>
 </template>
 
@@ -19,41 +19,47 @@ export default {
   props: {
     msg: String
   },
+  data: function () {
+    return {
+      deferredPrompt: null
+    }
+  },
   mounted: function() {
     console.log('hello world mounted');
-    window.addEventListener('beforeinstallprompt', (e) => {
-      console.log('before install')
-      // Prevent Chrome 67 and earlier from automatically showing the prompt
-      e.preventDefault();
-      window.deferredPrompt = e;
-      // Stash the event so it can be triggered later.
-      // eslint-disable-next-line no-undef
 
-      /*var deferredPrompt = e;
-      // Update UI to notify the user they can add to home screen
-      let addBtn = document.querySelector(".add-button");
-      addBtn.style.display = 'block';*/
-
-      //addBtn.addEventListener('click', (e) => {
-
-        // hide our user interface that shows our A2HS button
-        //addBtn.style.display = 'none';
-        // Show the prompt
-      window.deferredPrompt.prompt();
-        // Wait for the user to respond to the prompt
-      window.deferredPrompt.userChoice.then((choiceResult) => {
-          if (choiceResult.outcome === 'accepted') {
-            console.log('User accepted the A2HS prompt');
-          } else {
-            console.log('User dismissed the A2HS prompt');
-          }
-        window.deferredPrompt = null;
-        });
-      //});
-    });
     window.addEventListener('appinstalled', () => {
       console.log("app installed");
     });
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      this.deferredPrompt = e;
+      this.showInstallPromotion();
+    });
+  },
+  methods : {
+    showInstallPromotion: function(){
+      let addBtn = document.querySelector(".add-button");
+      addBtn.style.display = 'block';
+    },
+    clickInstallBtn: function(){
+      this.hideMyInstallPromotion();
+      // Show the install prompt
+      this.deferredPrompt.prompt();
+      // Wait for the user to respond to the prompt
+      this.deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted the install prompt');
+        } else {
+          console.log('User dismissed the install prompt');
+        }
+      })
+
+    },
+    hideMyInstallPromotion: function(){
+      let addBtn = document.querySelector(".add-button");
+      addBtn.style.display = 'none';
+    }
   }
 };
 </script>
