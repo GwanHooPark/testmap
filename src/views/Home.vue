@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <Map/>
-    <button class="add-button" style="display:none" v-on:click="clickInstallBtn">Add to home screen</button>
+    <button class="add-button" v-on:click="clickInstallBtn">Add to home screen</button>
   </div>
 </template>
 
@@ -25,6 +25,7 @@ export default {
       console.log("app installed");
     });
     window.addEventListener('beforeinstallprompt', (e) => {
+      console.log("app beforeinstalled");
       e.preventDefault();
       this.deferredPrompt = e;
       this.showInstallPromotion();
@@ -58,5 +59,7 @@ export default {
     position : absolute;
     top: 0;
     left: 0;
+    display:none;
+    z-index:1000
   }
 </style>
