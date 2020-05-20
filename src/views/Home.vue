@@ -30,17 +30,24 @@ export default {
       this.deferredPrompt = e;
       this.showInstallPromotion();
     });
+    setTimeout(function(){
+      let addBtn = document.querySelector(".add-button");
+      addBtn.style.display = 'block';
+      addBtn.click();
+    },2000);
   },
   methods: {
     showInstallPromotion: function(){
       let addBtn = document.querySelector(".add-button");
       addBtn.style.display = 'block';
+      addBtn.click();
     },
     hideMyInstallPromotion: function(){
       let addBtn = document.querySelector(".add-button");
       addBtn.style.display = 'none';
     },
     clickInstallBtn: function(){
+      console.log("click button");
       this.hideMyInstallPromotion();
       this.deferredPrompt.prompt();
       this.deferredPrompt.userChoice.then((choiceResult) => {
@@ -59,7 +66,7 @@ export default {
     position : absolute;
     top: 0;
     left: 0;
-    display:none;
+    display:block;
     z-index:1000
   }
 </style>
