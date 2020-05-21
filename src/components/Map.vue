@@ -42,15 +42,16 @@
             },
             setCurrentPosition(latitude,longitude) {
 
-                var imageSrc = require('../assets/mylocation.png'),
+                /*//var imageSrc = require('../assets/mylocation.png'),
+                var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png',
                     imageSize = new kakao.maps.Size(34, 39),
                     imageOption = {offset: new kakao.maps.Point(27, 69)},
-                    markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+                    markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);*/
 
                 var markerPosition  = new kakao.maps.LatLng(latitude, longitude);
                 var marker = new kakao.maps.Marker({
-                    position: markerPosition,
-                    image: markerImage
+                    position: markerPosition/*,
+                    image: markerImage*/
                 });
                 marker.setMap(this.mapObject);
                 this.mapObject.panTo(markerPosition);
